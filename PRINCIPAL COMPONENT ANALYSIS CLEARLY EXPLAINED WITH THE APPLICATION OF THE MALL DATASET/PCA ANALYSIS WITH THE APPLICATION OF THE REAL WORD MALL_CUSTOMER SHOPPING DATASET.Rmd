@@ -1,0 +1,99 @@
+---
+title: "PRINCIPAL COMPONENT ANALYSIS WITH THE APPLICATION OF THE MALL_CUSTOMER SHOPPING DATASET"
+author: "Langat Erick"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+ warning = FALSE,
+ message = FALSE,
+ echo = TRUE)
+```
+
+*First, let me give you a brief overview of the Mall Customer dataset. This is a dataset that contains information on customers who visited a mall. The dataset includes variables such as customer ID, gender, age, annual income, and spending score. The spending score is a metric that measures how much a customer spends in the mall, based on their purchasing behavior.*
+
+*Now, let's dive into how to conduct a PCA on the Mall Customer dataset in R.*
+
+**Step 1: Load the Mall Customer dataset in R using the following code:**
+
+```{r}
+library(tidyverse)
+library(readr)
+mall_data <- read.csv("C:/Users/JIT/Downloads/PYTHON TUTORIALS/Mall_Customers.csv") 
+mall_data %>% head()
+```
+
+##### 
+
+Step 2: Extract the numerical variables from the dataset, which are age, annual income, and spending score. We will use these variables for the PCA. You can do this by running the following code:
+
+```{r}
+mall_numeric <- mall_data[, c(3:5)]
+mall_numeric %>% head()
+```
+
+##### 
+
+Step 3: Standardize the numerical variables to have a mean of 0 and a standard deviation of 1. This step is important because it ensures that all variables are on the same scale and have equal weight in the PCA. You can use the scale() function in R to do this:
+
+```{r}
+mall_scaled <- scale(mall_numeric)
+mall_scaled %>% head()
+```
+
+##### 
+
+Step 4: Conduct the PCA using the prcomp() function in R:
+
+```{r}
+mall_pca <- prcomp(mall_scaled)
+mall_pca
+```
+
+##### 
+
+**Step 5: Explore the results of the PCA. The prcomp() function in R produces several outputs, including the following**:
+
+-   *Standard deviation of each principal component, which tells us how much variation each component explains in the data.*
+
+-   *Proportion of total variance explained by each principal component, which tells us the percentage of the total variation in the data that is captured by each component.*
+
+-   *Loadings of each variable on each principal component, which tells us the contribution of each variable to each component.*
+
+**Here is the code to extract these outputs:**
+
+```{r}
+# Standard deviation of each principal component
+mall_pca$sdev
+```
+
+```{r}
+# Proportion of total variance explained by each principal component
+mall_pca$sdev^2/sum(mall_pca$sdev^2)
+```
+
+```{r}
+# Loadings of each variable on each principal component
+mall_pca$rotation
+```
+
+**So, what do these results mean in simple language?**
+
+The standard deviation of each principal component tells us how much variation in the data is explained by that component. For example, the first principal component explains 1.73 units of variation, while the second and third principal components explain 0.99 and 0.28 units of variation, respectively.
+
+The proportion of total variance explained by each principal component tells us the percentage of the total variation in the data that is captured by that component. For example, the first principal component captures 57.8% of the total variation in the data, while the second and third principal components capture 33.1% and 9.1% of the total variation, respectively.
+
+The loadings of each variable on each principal component tell us how much each variable contributes to each component. For example, the first principal component is heavily influenced by spending score, while the second principal component is heavily influenced by annual income and age.
+
+In summary, the results of the PCA on the Mall Customer dataset suggest that the spending score is the most important variable in explaining the variation in customer behavior, followed by annual income and age. This suggests that targeting customers based on their spending behavior may be more effective than targeting them based on their age or income. Additionally, by reducing.
+
+**Reasons why the spending score is the most important variable in explaining the variation in customer behavior,**
+
+In the PCA results for the Mall Customer dataset, the loadings of each variable on each principal component tell us how much each variable contributes to each component. Specifically, the higher the absolute value of the loading, the greater the contribution of that variable to that component.
+
+In this case, we can see that the spending score has the highest absolute loading value on the first principal component (PC1), which is the component that explains the most variation in the data (57.8%). This indicates that the spending score is the most important variable in explaining the variation in customer behavior among the variables included in the analysis.
+
+In other words, customers with high spending scores are likely to have similar purchasing behavior, and this behavior is more strongly related to the first principal component than the other variables included in the analysis (such as age and annual income).
+
+Of course, it's important to note that this conclusion is specific to the variables included in the analysis and the particular technique (PCA) used to analyze them. Other variables or techniques may yield different results. Nonetheless, in this case, the results suggest that targeting customers based on their spending behavior may be more effective than targeting them based on their age or income.
